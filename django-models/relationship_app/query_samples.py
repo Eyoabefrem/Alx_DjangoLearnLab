@@ -1,24 +1,36 @@
 from relationship_app.models import Author, Book, Library, Librarian
 
-def books_by_author(author_name):
-    author = Author.objects.get(name=author_name)
-    books = author.books.all()
-    for book in books:
-        print(f"Title: {book.title}, Author: {book.author.name}")
+def get_books_by_author(author_name):
+    """
+    Function to get all books by a specific author.
+    """
+    try:
+        author = Author.objects.get(name=author_name)
+        books_by_author = Book.objects.filter(author=author)
+        return books_by_author
+    except Author.DoesNotExist:
+        return f"Author with name '{author_name}' does not exist."
 
-def books_in_library(library_name):
-    library = Library.objects.get(name=library_name)
-    books = library.books.all()
-    for book in books:
-        print(f"Title: {book.title}, Library: {library.name}")
+def get_books_in_library(library_name):
+    """
+    Function to get all books in a specific library.
+    """
+    try:
+        library = Library.objects.get(name=library_name)
+        books_in_library = library.books.all()
+        return books_in_library
+    except Library.DoesNotExist:
+        return f"Library with name '{library_name}' does not exist."
 
-def librarian_for_library(library_name):
-    library = Library.objects.get(name=library_name)
-    librarian = library.librarian
-    print(f"Librarian: {librarian.name}, Library: {library.name}")
-
-if __name__ == "__main__":
-    # Replace 'Author Name' and 'Library Name' with actual names in your database
-    books_by_author('Author Name')
-    books_in_library('Library Name')
-    librarian_for_library('Library Name')
+def get_librarian_for_library(library_name):
+    """
+    Function to get the librarian for a specific library.
+    """
+    try:
+        library = Library.objects.get(name=library_name)
+        librarian = Librarian.objects.get(library=library)
+        return librarian
+    except Library.DoesNotExist:
+        return f"Library with name '{library_name}' does not exist."
+    except Librarian.DoesNotExist:
+        return f"Librarian for library '{library_name}' does not exist."
