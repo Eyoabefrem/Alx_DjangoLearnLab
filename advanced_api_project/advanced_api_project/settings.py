@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'advanced_api_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': ':memory:',  # Use an in-memory database for fast tests.
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
